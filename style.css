@@ -1,0 +1,385 @@
+/* ========== base variables (light as default) ========== */
+:root {
+  --bg: #ffffff;
+  --surface: #f6f8fa;
+  --card: #ffffff;
+  --accent: #0b74ff;
+  --text: #0f1724;
+  --muted: #00000;
+  --radius: 12px;
+  --font-size: 16px;
+  --font-title: 28px;
+  --font-small: 14px;
+}
+
+/* theme classes override variables */
+.theme-dark {
+  --bg: #081a31e0;
+  --surface: #16293e;
+  --card: #111821;
+  --accent: #0b74ff;
+  --text: #e6eef6;
+  --muted: #000000;
+}
+
+/* ========== global styles ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  min-height: clamp(100vh, 80vh, 1200px);
+  height: AUTO;
+  margin: 0;
+  font-family: Inter, system-ui, Arial;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.25s, color 0.25s;
+  -webkit-font-smoothing: antialiased;
+}
+.container {
+  padding: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 6px 0 14px;
+  font-size: clamp(18px, 2.2vw, 28px);
+}
+p {
+  color: #000000;
+  line-height: 1.5;
+}
+.theme-dark p {
+  color: #ffffff;
+}
+
+/* ========== card area ========== */
+.card {
+  background: #bdcee591;
+  padding: 14px;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+  border: 1px solid #607d8b;
+  margin-bottom: 12px;
+}
+.theme-dark .card {
+  background: #02163191;
+}
+/* ========== pages (single page app sections) ========== */
+.page,
+.subpage {
+  display: none;
+  padding-bottom: 90px;
+}
+/* leave space for tabbar */
+.page.active,
+.subpage.active {
+  display: block;
+}
+
+/* ========== modal login ========== */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(rgba(2, 6, 23, 0.45), rgba(2, 6, 23, 0.45));
+  z-index: 999;
+  padding: 20px;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.18s ease;
+}
+.modal.show {
+  visibility: visible;
+  opacity: 1;
+}
+.modal-box {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.2);
+  border: 1px solid #607d8b;
+}
+.modal-box h2 {
+  margin: 0 0 8px;
+  color: var(--text);
+}
+.close-x {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--muted);
+}
+.theme-dark .close-x {
+  color: #ffffff;
+}
+.form-row {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+input[type='text'],
+input[type='password'] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 36, 0.08);
+  background: var(--card);
+  color: var(--text);
+  font-size: clamp(14px, 1.4vw, 16px);
+}
+.btn {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  font-size: clamp(14px, 1.4vw, 16px);
+}
+
+/* ========== tabbar (mobile app style fixed bottom) ========== */
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  margin: 0 auto;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  width: min(720px, calc(100% - 24px));
+  height: 64px;
+  padding: 8px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.6)
+  );
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.12);
+  border-radius: 16px;
+  z-index: 998;
+  border: 1px solid rgba(15, 23, 36, 0.06);
+}
+button .tab-item :hover {
+  background: #000000;
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* ensure tabbar color matches theme (slightly card-like) */
+body.theme-dark .tabbar {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 1)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Khi ẩn xuống */
+.tabbar.hide {
+  transform: translateY(120%);
+}
+
+.tab-item {
+  flex: 1;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: clamp(
+    12px,
+    1.8vw,
+    16px
+  ); /* responsive size: phone small, desktop larger */
+  padding: 6px 8px;
+  transition: color 0.18s, transform 0.12s;
+}
+.tab-item .icon {
+  font-size: clamp(18px, 3.6vw, 22px);
+}
+.tab-item.active {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ensure touch targets good on mobile */
+@media (max-width: 420px) {
+  .tabbar {
+    height: 56px;
+    border-radius: 12px;
+    padding: 6px;
+    bottom: 8px;
+  }
+  .tab-item {
+    font-size: clamp(11px, 3.6vw, 13px);
+  }
+}
+
+/* small helper for theme button list */
+.themes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.theme-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid #000000;
+  font-size: 14px;
+}
+.theme-dark .theme-chip {
+  border: 1px solid #607d8b;
+}
+/* =================== HOME CARD GRID =================== */
+.card-grid {
+  display: grid;
+  gap: 18px;
+  padding: 10px;
+}
+
+@media (min-width: 640px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 900px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* =================== HOME CARD =================== */
+.card-grid {
+  display: grid;
+  gap: 20px;
+}
+
+/* CARD */
+.home-card {
+  background: #05204a !important;
+  border-radius: 15px !important;
+  overflow: hidden;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  border: 2px solid #ff9800;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+/* HOVER: PHÓNG TO + GLOW MẠNH */
+.home-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.4), 0 0 35px rgba(255, 0, 255, 0.25);
+}
+
+/* BÊN TRONG */
+.home-card-inner {
+  position: relative;
+}
+
+/* ẢNH */
+.home-card img {
+  width: 100%;
+  object-fit: cover;
+}
+
+/* CHỮ */
+.home-card h3 {
+  margin: 12px;
+  font-size: 1.35rem;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+  font-weight: 700;
+}
+
+.home-card p {
+  margin: 0 12px 14px;
+  color: #cde;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+/* =================== MAIN HEADER FULL-WIDTH =================== */
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px 24px;
+  width: 100%;
+  background: linear-gradient(135deg, #2065f2, #7a4dff); /* gradient hiện đại */
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+}
+
+/* Logo lớn, responsive */
+.header-logo {
+  width: clamp(80px, 10vw, 200px);
+  height: auto;
+  object-fit: cover;
+  border-radius: 90px;
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
+
+/* Text header */
+.header-text {
+  font-family: 'Quicksand', cursive;
+  letter-spacing: 1px;
+  font-size: clamp(24px, 8vw, 72px); /* responsive lớn/nhỏ */
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  text-shadow: 1px 1px 0 #aaa, 2px 2px 0 #999, 3px 3px 0 #888, 4px 4px 0 #777,
+    5px 5px 0 #666;
+}
+
+/* THEME override: light/dark/blue/purple */
+body.theme-dark .main-header {
+  background: linear-gradient(135deg, #0b0f14, #111821);
+  color: #e6eef6;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .main-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 12px;
+    gap: 12px;
+  }
+  .header-logo {
+    width: 80px;
+    height: 80px;
+  }
+  .header-text {
+    font-size: clamp(12px, 8vw, 36px);
+  }
+}
